@@ -12,6 +12,8 @@ export const ShapeInstance = ({
   onChange,
   onSelect,
   shape,
+  onCompletedDragEnd,
+  onTransformDragMove,
   ...props
 }: IShapeInstance) => {
   const shapeRef = useRef<any>(null);
@@ -37,6 +39,8 @@ export const ShapeInstance = ({
       x: e.target.x(),
       y: e.target.y(),
     });
+
+    onCompletedDragEnd(e);
   };
 
   /*
@@ -80,6 +84,7 @@ export const ShapeInstance = ({
     return newBox;
   };
 
+  //* Create a new variable with JSX rules for Component from shape
   const CustomShape = shape;
 
   return (
@@ -90,8 +95,7 @@ export const ShapeInstance = ({
         onClick={onSelect}
         onTap={onSelect}
         draggable
-        name={id}
-        // onDragStart={onSelect}
+        name="shape"
         onDragEnd={onHandleDragEnd}
         onTransformEnd={onHandleTransformEnd}
         {...props}
@@ -100,7 +104,11 @@ export const ShapeInstance = ({
         //* Component imported from Konva that
         //* handle the transform actions into the
         //* shape instance
-        <Transformer ref={transformRef} boundBoxFunc={onHandleBoundBoxFunc} />
+        <Transformer
+          ref={transformRef}
+          boundBoxFunc={onHandleBoundBoxFunc}
+          onDragMove={() => onTransformDragMove(id, transformRef)}
+        />
       )}
     </>
   );
