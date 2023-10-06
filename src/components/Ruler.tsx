@@ -2,7 +2,7 @@
 
 import { useRuler } from "@/hooks/useRuler";
 import Script from "next/script";
-import React, { FC, useRef } from "react";
+import React, { FC, useEffect, useRef } from "react";
 
 interface RulerProps {
   children?: React.ReactNode;
@@ -11,6 +11,8 @@ interface RulerProps {
 const RULER_PADDING = 30;
 
 const Ruler: FC<RulerProps> = ({ children }) => {
+  const unique_id = new Date().getTime();
+
   const rulerRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -19,12 +21,11 @@ const Ruler: FC<RulerProps> = ({ children }) => {
   return (
     <>
       <div
-        className="container"
         ref={containerRef}
         style={{
           position: "relative",
-          width: "100vw",
-          height: "100vh",
+          width: "95vw",
+          height: "95vh",
         }}
       >
         <div
@@ -52,7 +53,11 @@ const Ruler: FC<RulerProps> = ({ children }) => {
         </div>
       </div>
 
-      <Script src="/rulerjs/ruler.min.js" onLoad={renderRuler} />
+      <Script
+        src={`/rulerjs/ruler.min.js?v=${unique_id}`}
+        strategy="afterInteractive"
+        onLoad={renderRuler}
+      />
     </>
   );
 };

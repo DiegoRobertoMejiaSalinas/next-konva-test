@@ -51,7 +51,10 @@ export default function Page() {
   return (
     <div>
       <Ruler>
-        <Stage width={window.innerWidth} height={window.innerHeight}>
+        <Stage
+          width={window.innerWidth - 100}
+          height={window.innerHeight - 100}
+        >
           <Layer>
             {state.map((item) => (
               <Circle
