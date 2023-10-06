@@ -4,13 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "sh ./setup.sh && next build",
+    "build": "next build",
+    "build-vercel": "sh ./setup.sh && next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "canvas": "^2.11.2",
     "konva": "^9.2.1",
+    "nanoid": "^5.0.1",
     "next": "13.5.4",
     "react": "^18",
     "react-dom": "^18",

@@ -1,6 +1,5 @@
 "use client";
 
-import Konva from "konva";
 import { useRef, useState } from "react";
 import { Circle, Layer, Line, Rect, Stage, Transformer } from "react-konva";
 
