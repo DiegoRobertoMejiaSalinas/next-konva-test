@@ -1,8 +1,8 @@
 "use client";
 
-import Ruler from "@/components/Ruler";
+import { Component, useState } from "react";
 import Konva from "konva";
-import { useRef, useState } from "react";
+import { createRoot } from "react-dom/client";
 import { Stage, Layer, Circle } from "react-konva";
 
 const generateItems = () => {
@@ -47,28 +47,23 @@ export default function Page() {
     };
     setState(items);
   };
-
   return (
-    <div>
-      <Ruler>
-        <Stage width={window.innerWidth} height={window.innerHeight}>
-          <Layer>
-            {state.map((item) => (
-              <Circle
-                key={item.id}
-                name={item.id}
-                draggable
-                x={item.x}
-                y={item.y}
-                fill={item.color}
-                radius={50}
-                onDragStart={handleDragStart}
-                onDragEnd={handleDragEnd}
-              />
-            ))}
-          </Layer>
-        </Stage>
-      </Ruler>
-    </div>
+    <Stage width={window.innerWidth} height={window.innerHeight}>
+      <Layer>
+        {state.map((item) => (
+          <Circle
+            key={item.id}
+            name={item.id}
+            draggable
+            x={item.x}
+            y={item.y}
+            fill={item.color}
+            radius={50}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+          />
+        ))}
+      </Layer>
+    </Stage>
   );
 }
