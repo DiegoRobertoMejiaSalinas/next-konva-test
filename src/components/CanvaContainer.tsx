@@ -25,6 +25,25 @@ export const CanvaContainer = ({ initialShapes }: Props) => {
     }
   };
 
+  /*
+   * Function that handle the selection of the ShapeInstances
+   */
+  const onHandleSelect = (id: string) => {
+    setSelectedShapeId(id);
+
+    const internalShapes = shapes.slice(); //* Create a copy of the shapes
+    const foundShape = internalShapes.find(
+      (internalShapeItem) => internalShapeItem.id === id
+    ) as IShape;
+    const foundIndex = internalShapes.indexOf(foundShape);
+    //* Removes the foundShape from the internal list
+    internalShapes.splice(foundIndex, 1);
+    //* And add it to the top making the Z-index applies
+    internalShapes.push(foundShape);
+
+    setShapes(internalShapes);
+  };
+
   return (
     <>
       <Stage
@@ -40,7 +59,7 @@ export const CanvaContainer = ({ initialShapes }: Props) => {
               {...props}
               id={id}
               isSelected={id === selectedShapeId}
-              onSelect={() => setSelectedShapeId(id)}
+              onSelect={() => onHandleSelect(id)}
               onChange={(newAttrs: any) => {
                 /*
                  * This function removes the old shape setting and updates it with the new values that we updated

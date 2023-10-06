@@ -90,7 +90,8 @@ export const ShapeInstance = ({
         onClick={onSelect}
         onTap={onSelect}
         draggable
-        name="shape"
+        name={id}
+        // onDragStart={onSelect}
         onDragEnd={onHandleDragEnd}
         onTransformEnd={onHandleTransformEnd}
         {...props}
