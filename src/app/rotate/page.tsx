@@ -1,17 +1,29 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Stage, Layer, Rect, Transformer } from "react-konva";
 
-const Rectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
-  const shapeRef = React.useRef();
-  const trRef = React.useRef();
+interface RectangleProps {
+  shapeProps: any;
+  isSelected: boolean;
+  onSelect: any;
+  onChange: any;
+}
+
+const Rectangle = ({
+  shapeProps,
+  isSelected,
+  onSelect,
+  onChange,
+}: RectangleProps) => {
+  const shapeRef = useRef<any>(null);
+  const trRef = useRef<any>(null);
 
   useEffect(() => {
     if (isSelected) {
       // we need to attach transformer manually
-      trRef.current.nodes([shapeRef.current]);
-      trRef.current.getLayer().batchDraw();
+      trRef.current!.nodes([shapeRef.current]);
+      trRef.current!.getLayer().batchDraw();
     }
   }, [isSelected]);
 
@@ -91,7 +103,7 @@ export default function RotatePage() {
   const [rectangles, setRectangles] = useState(initialRectangles);
   const [selectedId, selectShape] = useState<string | null>(null);
 
-  const checkDeselect = (e) => {
+  const checkDeselect = (e: any) => {
     // deselect when clicked on empty area
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {
@@ -101,8 +113,8 @@ export default function RotatePage() {
 
   return (
     <Stage
-      width={window.innerWidth}
-      height={window.innerHeight}
+      width={1000}
+      height={1000}
       onMouseDown={checkDeselect}
       onTouchStart={checkDeselect}
     >
@@ -116,7 +128,7 @@ export default function RotatePage() {
               onSelect={() => {
                 selectShape(rect.id);
               }}
-              onChange={(newAttrs) => {
+              onChange={(newAttrs: any) => {
                 const rects = rectangles.slice();
                 rects[i] = newAttrs;
                 setRectangles(rects);

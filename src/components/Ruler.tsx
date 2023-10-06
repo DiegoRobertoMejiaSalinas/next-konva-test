@@ -55,7 +55,6 @@ const Ruler: FC<RulerProps> = ({ children }) => {
 
       <Script
         src={`/rulerjs/ruler.min.js?v=${unique_id}`}
-        strategy="afterInteractive"
         onLoad={renderRuler}
       />
     </>

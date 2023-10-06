@@ -9,8 +9,8 @@ const generateItems = () => {
   const items = [];
   for (let i = 0; i < 10; i++) {
     items.push({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
+      x: Math.random() * 10000,
+      y: Math.random() * 1000,
       id: "node-" + i,
       color: Konva.Util.getRandomColor(),
     });
@@ -23,22 +23,22 @@ export default function Page() {
 
   const [state, setState] = useState(internalItems);
 
-  const handleDragStart = (e) => {
+  const handleDragStart = (e: any) => {
     const id = e.target.name();
     const items = state.slice();
     const item = items.find((i) => i.id === id);
-    const index = items.indexOf(item);
+    const index = items.indexOf(item!);
     // remove from the list:
     items.splice(index, 1);
     // add to the top
-    items.push(item);
+    items.push(item!);
     setState(items);
   };
-  const handleDragEnd = (e) => {
+  const handleDragEnd = (e: any) => {
     const id = e.target.name();
     const items = state.slice();
-    const item = state.find((i) => i.id === id);
-    const index = state.indexOf(item);
+    const item = state.find((i) => i.id === id)!;
+    const index = state.indexOf(item!);
     // update item position
     items[index] = {
       ...item,
@@ -51,10 +51,7 @@ export default function Page() {
   return (
     <div>
       <Ruler>
-        <Stage
-          width={window.innerWidth - 100}
-          height={window.innerHeight - 100}
-        >
+        <Stage width={1000} height={1000}>
           <Layer>
             {state.map((item) => (
               <Circle

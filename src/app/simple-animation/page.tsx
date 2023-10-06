@@ -3,7 +3,7 @@
 import { Component, useRef } from "react";
 import { Stage, Layer, Rect } from "react-konva";
 
-export const MyRect = () => {
+const MyRect = () => {
   const ref = useRef<any>(null);
 
   const changeSize = () => {
@@ -30,7 +30,7 @@ export const MyRect = () => {
 
 export default function Page() {
   return (
-    <Stage width={window.innerWidth} height={window.innerHeight}>
+    <Stage width={1000} height={1000}>
       <Layer>
         <MyRect />
       </Layer>

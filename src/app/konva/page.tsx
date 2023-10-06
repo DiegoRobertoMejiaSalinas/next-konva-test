@@ -9,8 +9,8 @@ import { Stage, Layer, Star, Text, Arrow, Rect } from "react-konva";
 function generateShapes() {
   return [...Array(10)].map((_, i) => ({
     id: i.toString(),
-    x: Math.random() * window.innerWidth,
-    y: Math.random() * window.innerHeight,
+    x: Math.random() * 1000,
+    y: Math.random() * 100,
     rotation: Math.random() * 180,
     isDragging: false,
   }));
@@ -21,7 +21,7 @@ const INITIAL_STATE = generateShapes();
 export default function Home() {
   const [stars, setStars] = useState(INITIAL_STATE);
 
-  const handleDragStart = (e) => {
+  const handleDragStart = (e: any) => {
     const id = e.target.id();
     setStars(
       stars.map((star) => {
@@ -32,7 +32,7 @@ export default function Home() {
       })
     );
   };
-  const handleDragEnd = (e) => {
+  const handleDragEnd = (e: any) => {
     setStars(
       stars.map((star) => {
         return {
@@ -44,7 +44,7 @@ export default function Home() {
   };
 
   return (
-    <Stage width={window.innerWidth} height={window.innerHeight}>
+    <Stage width={1000} height={1000}>
       <Layer>
         <Text text="Try to drag a star" />
         {stars.map((star) => (

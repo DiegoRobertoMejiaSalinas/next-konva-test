@@ -6,7 +6,7 @@ import { Circle, Layer, Line, Rect, Stage, Transformer } from "react-konva";
 
 const SHAPES = [
   {
-    id: 1,
+    id: "1",
     x: 0,
     y: 0,
     height: 100,
@@ -15,7 +15,7 @@ const SHAPES = [
     shape: Rect,
   },
   {
-    id: 2,
+    id: "2",
     x: 170,
     y: 150,
     height: 100,
@@ -24,7 +24,7 @@ const SHAPES = [
     shape: Rect,
   },
   {
-    id: 3,
+    id: "3",
     x: 200,
     y: 350,
     height: 100,
@@ -33,7 +33,7 @@ const SHAPES = [
     shape: Circle,
   },
   {
-    id: 4,
+    id: "4",
     x: 450,
     y: 250,
     height: 100,
@@ -106,7 +106,7 @@ export default function Page() {
     selectedNode.setAbsolutePosition(newPos);
   };
 
-  const drawLines = (lines = []) => {
+  const drawLines = (lines: any[] = []) => {
     if (lines.length > 0) {
       const lineStyle = {
         stroke: "rgb(0, 161, 255)",
@@ -114,9 +114,9 @@ export default function Page() {
         name: "guid-line",
         dash: [4, 6],
       };
-      const hLines = [];
-      const vLines = [];
-      lines.forEach((l) => {
+      const hLines: any = [];
+      const vLines: any = [];
+      lines.forEach((l: any) => {
         if (l.orientation === "H") {
           const line = {
             points: [-6000, 0, 6000, 0],
@@ -142,11 +142,19 @@ export default function Page() {
     }
   };
 
-  const getClosestSnapLines = (possibleSnapLines, shapeSnappingEdges) => {
-    const getAllSnapLines = (direction) => {
-      const result = [];
-      possibleSnapLines[direction].forEach((snapLine) => {
-        shapeSnappingEdges[direction].forEach((snappingEdge) => {
+  interface getClosestSnapLinesProps {
+    possibleSnapLines: any;
+    shapeSnappingEdges: any;
+  }
+
+  const getClosestSnapLines = (
+    possibleSnapLines: any,
+    shapeSnappingEdges: any
+  ) => {
+    const getAllSnapLines = (direction: any) => {
+      const result: any[] = [];
+      possibleSnapLines[direction].forEach((snapLine: any) => {
+        shapeSnappingEdges[direction].forEach((snappingEdge: any) => {
           const diff = Math.abs(snapLine - snappingEdge.guide);
           // If the distance between the line and the shape is less than the threshold, we will consider it a snapping point.
           if (diff > SNAP_THRESHOLD) return;
@@ -163,7 +171,16 @@ export default function Page() {
 
     const closestSnapLines = [];
 
-    const getSnapLine = ({ snapLine, offset, snap }, orientation) => {
+    interface getSnapLineProps {
+      snapLine: any;
+      offset: any;
+      snap: any;
+    }
+
+    const getSnapLine = (
+      { snapLine, offset, snap }: getSnapLineProps,
+      orientation: any
+    ) => {
       return { snapLine, offset, orientation, snap };
     };
 
@@ -176,16 +193,16 @@ export default function Page() {
     return closestSnapLines;
   };
 
-  const getSnapLines = (excludedShape) => {
+  const getSnapLines = (excludedShape: any) => {
     const stage = stageRef.current;
     if (!stage) return;
 
-    const vertical = [];
-    const horizontal = [];
+    const vertical: any[] = [];
+    const horizontal: any[] = [];
 
     // We snap over edges and center of each object on the canvas
     // We can query and get all the shapes by their name property `shape`.
-    stage.find(".shape").forEach((shape) => {
+    stage.find(".shape").forEach((shape: any) => {
       // We don't want to snap to the selected shape, so we will be passing them as `excludedShape`
       if (shape === excludedShape) return;
 
@@ -252,19 +269,19 @@ export default function Page() {
   };
 
   return (
-    <div style={{ width: window.innerWidth, height: window.innerHeight }}>
+    <div style={{ width: "100vw", height: "100vh" }}>
       <Stage
         onClick={(e) =>
           e.target === stageRef.current && transformerRef.current.nodes([])
         }
         ref={stageRef}
-        width={window.innerWidth}
-        height={window.innerHeight}
+        width={1000}
+        height={1000}
       >
         <Layer>
           {shapes.map(({ shape: Shape, ...props }, index) => (
             <Shape
-              key={props.id}
+              key={String(props.id)}
               draggable
               name="shape"
               onMouseDown={(e) =>
@@ -274,10 +291,10 @@ export default function Page() {
             />
           ))}
           <Transformer ref={transformerRef} onDragMove={onDragMove} />
-          {hLines.map((item, i) => (
+          {hLines.map((item: any, i) => (
             <Line key={i} {...item} />
           ))}
-          {vLines.map((item, i) => (
+          {vLines.map((item: any, i) => (
             <Line key={i} {...item} />
           ))}
         </Layer>
